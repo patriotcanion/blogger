@@ -5816,10 +5816,10 @@ body.search-visible {
 .btn {
 	text-transform: uppercase;
 }
-.section-title .title {
+.testimonial-bg-footer .section-title .title {
 	color: #FFFFFF;
 }
-footer .testi-avatar-img img {
+.testimonial-bg-footer .testi-avatar-img img {
 	max-width: inherit;
 	border-radius: 8px;
 }
