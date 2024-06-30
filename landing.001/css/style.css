@@ -6087,3 +6087,7 @@ body.search-visible {
 .formula-img {
 	margin-right: unset;
 }
+.features-products-wrap:nth-child(even) .features-products-thumb .shape-img {
+	bottom: 13px;
+	right: -110px;
+}
