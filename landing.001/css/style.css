@@ -5823,3 +5823,6 @@ body.search-visible {
 	max-width: inherit;
 	border-radius: 8px;
 }
+.formula-img {
+	margin-right: unset;
+}
