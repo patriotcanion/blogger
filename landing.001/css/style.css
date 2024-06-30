@@ -6091,3 +6091,6 @@ body.search-visible {
 	bottom: 20px;
 	right: -110px;
 }
+.pricing-btn a > span {
+	line-height: 1.8;
+}
