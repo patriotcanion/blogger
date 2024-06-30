@@ -6088,6 +6088,6 @@ body.search-visible {
 	margin-right: unset;
 }
 .features-products-wrap:nth-child(even) .features-products-thumb .shape-img {
-	bottom: 13px;
+	bottom: 20px;
 	right: -110px;
 }
