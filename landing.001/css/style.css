@@ -6081,7 +6081,7 @@ body.search-visible {
 	color: #FFFFFF;
 }
 .testimonial-bg-footer .testi-avatar-img img {
-	max-width: inherit;
+	max-width: 100%;
 	border-radius: 8px;
 }
 .formula-img {
