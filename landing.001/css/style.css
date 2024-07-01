@@ -6132,11 +6132,11 @@ body.search-visible {
 }
 @keyframes ripple-dark {
     0% {
-        -webkit-box-shadow: 0 0 0 0 rgba(255, 255, 255,0.3), 0 0 0 20px rgba(255, 255, 255,0.3), 0 0 0 40px rgba(255, 255, 255,0.3);
-        box-shadow: 0 0 0 0 rgba(255, 255, 255,0.3), 0 0 0 20px rgba(255, 255, 255,0.3), 0 0 0 40px rgba(255, 255, 255,0.3);
+        -webkit-box-shadow: 0 0 0 0 rgba(255, 255, 255,0.3), 0 0 0 15px rgba(255, 255, 255,0.3), 0 0 0 30px rgba(255, 255, 255,0.3);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255,0.3), 0 0 0 15px rgba(255, 255, 255,0.3), 0 0 0 30px rgba(255, 255, 255,0.3);
     }
     100% {
-        -webkit-box-shadow: 0 0 0 20px rgba(255, 255, 255,0.3), 0 0 0 40px rgba(255, 255, 255,0.3), 0 0 0 60px rgba(255,255,255,0);
-        box-shadow: 0 0 0 20px rgba(255, 255, 255,0.3), 0 0 0 40px rgba(255, 255, 255,0.3), 0 0 0 60px rgba(255,255,255,0);
+        -webkit-box-shadow: 0 0 0 15px rgba(255, 255, 255,0.3), 0 0 0 30px rgba(255, 255, 255,0.3), 0 0 0 45px rgba(255,255,255,0);
+        box-shadow: 0 0 0 15px rgba(255, 255, 255,0.3), 0 0 0 30px rgba(255, 255, 255,0.3), 0 0 0 45px rgba(255,255,255,0);
     }
 }
