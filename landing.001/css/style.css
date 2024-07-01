@@ -3375,7 +3375,7 @@ body.search-visible {
 }
 
 /* 16. Testimonial */
-.testimonial-bg, .testimonial-bg-footer {
+.testimonial-bg {
 	background-position: center;
 	background-size: cover;
 	position: relative;
@@ -6072,6 +6072,13 @@ body.search-visible {
 .btn {
 	text-transform: uppercase;
 }
+.testimonial-bg-footer, .testimonial-bg-reviews {
+	background-position: center;
+	background-size: cover;
+	position: relative;
+	padding: 145px 0 150px;
+	z-index: 1;
+}
 .testimonial-bg-footer .section-title .title {
 	color: #FFFFFF;
 }
@@ -6079,7 +6086,7 @@ body.search-visible {
 	max-width: 100%;
 	border-radius: 8px;
 }
-.testimonial-bg::before, .testimonial-bg-footer::before {
+.testimonial-bg-footer::before {
 	content: "";
 	position: absolute;
 	left: 0px;
