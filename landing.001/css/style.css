@@ -6125,3 +6125,30 @@ body.search-visible {
 .pricing-btn a > span {
     line-height: 1.8;
 }
+.ripple-dark {
+    border-radius: 50%;
+    -webkit-animation: ripple-dark 1s linear infinite;
+    animation: ripple-dark 1s linear infinite;
+    transition: .5s;
+    -webkit-transition: .5s;
+}
+@-webkit-keyframes ripple-dark {
+    0% {
+        -webkit-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.3), 0 0 0 10px rgba(255, 255, 255,0.3), 0 0 0 20px rgba(255, 255, 255,0.3);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255,0.3), 0 0 0 10px rgba(255, 255, 255,0.3), 0 0 0 20px rgba(255, 255, 255,0.3);
+    }
+    100% {
+        -webkit-box-shadow: 0 0 0 10px rgba(255, 255, 255,0.3), 0 0 0 20px rgba(255, 255, 255,0.3), 0 0 0 30px rgba(255,255,255,0);
+        box-shadow: 0 0 0 10px rgba(255, 255, 255,0.3), 0 0 0 20px rgba(255, 255, 255,0.3), 0 0 0 30px rgba(255,255,255,0);
+    }
+}
+@keyframes ripple-dark {
+    0% {
+        -webkit-box-shadow: 0 0 0 0 rgba(255, 255, 255,0.3), 0 0 0 10px rgba(255, 255, 255,0.3), 0 0 0 20px rgba(255, 255, 255,0.3);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255,0.3), 0 0 0 10px rgba(255, 255, 255,0.3), 0 0 0 20px rgba(255, 255, 255,0.3);
+    }
+    100% {
+        -webkit-box-shadow: 0 0 0 10px rgba(255, 255, 255,0.3), 0 0 0 20px rgba(255, 255, 255,0.3), 0 0 0 30px rgba(255,255,255,0);
+        box-shadow: 0 0 0 10px rgba(255, 255, 255,0.3), 0 0 0 20px rgba(255, 255, 255,0.3), 0 0 0 30px rgba(255,255,255,0);
+    }
+}
