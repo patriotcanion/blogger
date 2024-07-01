@@ -6086,7 +6086,7 @@ body.search-visible {
 	max-width: 100%;
 	border-radius: 8px;
 }
-.testimonial-bg-footer::before {
+.testimonial-bg-footer::before, .testimonial-bg-reviews::before {
 	content: "";
 	position: absolute;
 	left: 0px;
