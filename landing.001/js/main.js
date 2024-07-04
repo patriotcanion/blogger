@@ -120,6 +120,7 @@ function BB_sumTotal(_seekedQuantity){
 
 
 function BB_itemQuantitySelector(_firstQuantity){
+	console.log("thissssssssssssssssss", _firstQuantity);
 	let bb_quantityCounter = (bb_seekedQuantity.value < _firstQuantity) ? _firstQuantity : bb_seekedQuantity.value;
 
 	bb_quantitySelection.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
