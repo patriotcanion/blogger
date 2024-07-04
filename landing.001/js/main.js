@@ -121,9 +121,7 @@ function BB_sumTotal(_seekedQuantity){
 
 function BB_itemQuantitySelector(_firstQuantity){
 	let bb_quantityCounter = parseInt(bb_seekedQuantity.value, 10);
-	bb_quantityCounter = (bb_quantityCounter < _firstQuantity) ? _firstQuantity : bb_quantityCounter;
-
-	console.log("thissssssssssssssssss", _firstQuantity, bb_quantityCounter);
+	bb_quantityCounter = (bb_quantityCounter <= _firstQuantity) ? _firstQuantity : bb_quantityCounter;
 
 	bb_quantitySelection.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
@@ -141,7 +139,7 @@ function BB_itemQuantitySelector(_firstQuantity){
 
 	bb_seekedQuantity.addEventListener('input', (event) => {
 		event.preventDefault();
-		bb_quantityCounter = bb_seekedQuantity.value;
+		bb_quantityCounter = bb_quantityCounter;
 		BB_sumTotal(bb_quantityCounter);
 	});
 }
