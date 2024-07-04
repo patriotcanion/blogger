@@ -125,7 +125,7 @@ if(bb_information.product.options){
 			bb_eachComboPrice * bb_infoOptions[index].quantity, 1000
 		)})`;
 		element.querySelector('.save').innerHTML = `Giảm ${BB_numberWithCommas(bb_infoOptions[index].percent, 1)}%`;
-		element.dataset.bbOrderStart = bb_infoOptions[index].quantity;
+		element.dataset.bborderstart = bb_infoOptions[index].quantity;
 	})
 }
 
@@ -133,13 +133,11 @@ if(bb_information.product.options){
 const bb_modal = document.querySelector('#bb-contact-form');
 document.querySelectorAll('[data-bbOrderStart]').forEach(function(elem){
 	elem.href = 'javascript:void(0)';
-
 	elem.addEventListener('click', (event) => {
 		event.preventDefault();
-		BB_itemQuantitySelector(elem.dataset.bbOrderStart);
+		BB_itemQuantitySelector(elem.dataset.bborderstart);
 		bb_modal.style.cssText = 'display: flex; position: fixed';
 	});
-	// elem.onclick = function (){}
 });
 document.querySelector('[data-bbOrderClose]').onclick = function(){bb_modal.style.display = 'none'}
 window.onclick = function(event) {if(event.target == bb_modal) bb_modal.style.display = 'none'}
@@ -170,13 +168,11 @@ function BB_sumTotal(_seekedQuantity){
 function BB_itemQuantitySelector(_firstQuantity){
 	let bb_quantityCounter = parseInt(_firstQuantity, 10);
 
-	console.log(bb_quantityCounter)
 	bb_quantitySelection.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
 		bb_quantityCounter++;
 		bb_seekedQuantity.value = bb_quantityCounter;
 		BB_sumTotal(bb_quantityCounter);
-		console.log(bb_seekedQuantity.value)
 	});
 
 	bb_quantitySelection.querySelector('button:nth-child(1)').addEventListener('click', (event) => {
@@ -184,14 +180,12 @@ function BB_itemQuantitySelector(_firstQuantity){
 		if (bb_seekedQuantity.value > 0) bb_quantityCounter--;
 		bb_seekedQuantity.value = bb_quantityCounter;
 		BB_sumTotal(bb_quantityCounter);
-		console.log(bb_seekedQuantity.value)
 	});
 
 	bb_seekedQuantity.addEventListener('input', (event) => {
 		event.preventDefault();
 		bb_quantityCounter = bb_seekedQuantity.value;
 		BB_sumTotal(bb_quantityCounter);
-		console.log(bb_seekedQuantity.value)
 	});
 }
 
