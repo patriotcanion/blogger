@@ -159,12 +159,12 @@ if(bb_information.product.options){
 	const bb_infoOptions = Object.values(bb_information.options);
 
 	[bb_productComboRegular, bb_productComboPopular, bb_productComboSpecial].forEach((element, index) => {
-		const bb_eachComboPrice = bb_information.product.price * (100 - bb_infoOptions[index].percent);
-		element.querySelector('.price').innerHTML = `${BB_numberWithCommas(bb_eachComboPrice, 1000)}<sup>đ</sup>`;
-		element.querySelector('.total').textContent = `(Tổng ${BB_numberWithCommas(
+		const bb_eachComboPrice = bb_information.product.price * (100 - bb_infoOptions[index].percent) / 100;
+		element.querySelector('.price').innerHTML = `${BB_numberWithCommas(bb_eachComboPrice, 1000)}`;
+		element.querySelector('.total').innerHTML = `(Tổng ${BB_numberWithCommas(
 			bb_eachComboPrice * bb_infoOptions[index].quantity, 1000
-		)})<sup>đ</sup>`;
-		element.querySelector('.save').textContent = `Giảm ${BB_numberWithCommas(bb_infoOptions[index].percent, 1)}%`;
+		)})`;
+		element.querySelector('.save').innerHTML = `Giảm ${BB_numberWithCommas(bb_infoOptions[index].percent, 1)}%`;
 	})
 }
 
