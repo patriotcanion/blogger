@@ -28,8 +28,30 @@ bb_tempNode.innerHTML = `Đơn trên ${BB_numberWithCommas(bb_information.shippi
 bb_productName.after(bb_tempNode);
 bb_productPrice.innerHTML = BB_numberWithCommas(bb_information.product.price, 0) + '<sup>đ</sup>';
 
-BB_itemQuantitySelector(1);
 BB_sumTotal(bb_seekedQuantity.value);
+
+
+let bb_quantityCounter = parseInt(bb_seekedQuantity.value, 10);
+
+bb_quantitySelection.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
+	event.preventDefault();
+	bb_quantityCounter++;
+	bb_seekedQuantity.value = bb_quantityCounter;
+	BB_sumTotal(bb_quantityCounter);
+});
+
+bb_quantitySelection.querySelector('button:nth-child(1)').addEventListener('click', (event) => {
+	event.preventDefault();
+	if (bb_seekedQuantity.value > 0) bb_quantityCounter--;
+	bb_seekedQuantity.value = bb_quantityCounter;
+	BB_sumTotal(bb_quantityCounter);
+});
+
+bb_seekedQuantity.addEventListener('input', (event) => {
+	event.preventDefault();
+	bb_quantityCounter = bb_seekedQuantity.value;
+	BB_sumTotal(bb_quantityCounter);
+});
 
 
 const bb_contactName = document.querySelector('#bb-form-contact-name > input');
@@ -119,29 +141,29 @@ function BB_sumTotal(_seekedQuantity){
 }
 
 
-function BB_itemQuantitySelector(_firstQuantity){
-	let bb_quantityCounter = parseInt(bb_seekedQuantity.value, 10);
+// function BB_itemQuantitySelector(_firstQuantity){
+// 	let bb_quantityCounter = parseInt(bb_seekedQuantity.value, 10);
 
-	bb_quantitySelection.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
-		event.preventDefault();
-		bb_quantityCounter = bb_quantityCounter + _firstQuantity;
-		bb_seekedQuantity.value = bb_quantityCounter;
-		BB_sumTotal(bb_quantityCounter);
-	});
+// 	bb_quantitySelection.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
+// 		event.preventDefault();
+// 		bb_quantityCounter = bb_quantityCounter + _firstQuantity;
+// 		bb_seekedQuantity.value = bb_quantityCounter;
+// 		BB_sumTotal(bb_quantityCounter);
+// 	});
 
-	bb_quantitySelection.querySelector('button:nth-child(1)').addEventListener('click', (event) => {
-		event.preventDefault();
-		if (bb_seekedQuantity.value > 0) bb_quantityCounter = bb_quantityCounter - _firstQuantity;
-		bb_seekedQuantity.value = bb_quantityCounter;
-		BB_sumTotal(bb_quantityCounter);
-	});
+// 	bb_quantitySelection.querySelector('button:nth-child(1)').addEventListener('click', (event) => {
+// 		event.preventDefault();
+// 		if (bb_seekedQuantity.value > 0) bb_quantityCounter = bb_quantityCounter - _firstQuantity;
+// 		bb_seekedQuantity.value = bb_quantityCounter;
+// 		BB_sumTotal(bb_quantityCounter);
+// 	});
 
-	bb_seekedQuantity.addEventListener('input', (event) => {
-		event.preventDefault();
-		bb_quantityCounter = bb_quantityCounter;
-		BB_sumTotal(bb_quantityCounter);
-	});
-}
+// 	bb_seekedQuantity.addEventListener('input', (event) => {
+// 		event.preventDefault();
+// 		bb_quantityCounter = bb_quantityCounter;
+// 		BB_sumTotal(bb_quantityCounter);
+// 	});
+// }
 
 
 function BB_numberWithCommas(_number, _round){
@@ -160,7 +182,6 @@ if(bb_information.product.options){
 	const bb_infoOptions = Object.values(bb_information.options);
 
 	[bb_productComboRegular, bb_productComboPopular, bb_productComboSpecial].forEach((element, index) => {
-		BB_itemQuantitySelector(bb_infoOptions[index].quantity);
 		const bb_eachComboPrice = bb_information.product.price * (100 - bb_infoOptions[index].percent) / 100;
 		element.querySelector('.price').innerHTML = `${BB_numberWithCommas(bb_eachComboPrice, 1000)}`;
 		element.querySelector('.total').innerHTML = `(Tổng ${BB_numberWithCommas(
