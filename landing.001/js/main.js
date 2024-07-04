@@ -170,11 +170,13 @@ function BB_sumTotal(_seekedQuantity){
 function BB_itemQuantitySelector(_firstQuantity){
 	let bb_quantityCounter = parseInt(_firstQuantity, 10);
 
+	console.log(bb_quantityCounter)
 	bb_quantitySelection.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
 		bb_quantityCounter++;
 		bb_seekedQuantity.value = bb_quantityCounter;
 		BB_sumTotal(bb_quantityCounter);
+		console.log(bb_seekedQuantity.value)
 	});
 
 	bb_quantitySelection.querySelector('button:nth-child(1)').addEventListener('click', (event) => {
@@ -182,12 +184,14 @@ function BB_itemQuantitySelector(_firstQuantity){
 		if (bb_seekedQuantity.value > 0) bb_quantityCounter--;
 		bb_seekedQuantity.value = bb_quantityCounter;
 		BB_sumTotal(bb_quantityCounter);
+		console.log(bb_seekedQuantity.value)
 	});
 
 	bb_seekedQuantity.addEventListener('input', (event) => {
 		event.preventDefault();
 		bb_quantityCounter = bb_seekedQuantity.value;
 		BB_sumTotal(bb_quantityCounter);
+		console.log(bb_seekedQuantity.value)
 	});
 }
 
