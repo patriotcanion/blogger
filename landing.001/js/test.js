@@ -15,12 +15,13 @@ const bb_information = {
 
 const bb_productName = document.querySelector('#form-shopping-product > span');
 const bb_productPrice = document.querySelector('#form-shopping-price > span');
-const bb_priceQuantity = document.querySelector('#form-shopping-quantity > span > input');
+const bb_priceQuantity = document.querySelector('#form-shopping-quantity > span');
+const bb_priceQuantityInput = bb_priceQuantity.querySelector('input');
 const bb_priceActualCost = document.querySelector('#form-shopping-actualCost > span');
 const bb_priceDiscount = document.querySelector('#form-shopping-discount > span');
 const bb_priceShipCost = document.querySelector('#form-shopping-shipCost > span');
 const bb_pricelastCost = document.querySelector('#form-shopping-lastCost > span');
-let bb_quantityCounter = bb_priceQuantity.value;
+let bb_quantityCounter = bb_priceQuantityInput.value;
 
 bb_productName.textContent = bb_information.product.name;
 let bb_tempNode = document.createElement('small');
@@ -29,23 +30,23 @@ bb_productName.after(bb_tempNode);
 bb_productPrice.innerHTML = BB_numberWithCommas(bb_information.product.price, 0);
 BB_sumTotal();
 
-document.querySelector('#form-shopping-quantity > span > button:nth-last-child(1)').addEventListener('click', (event) => {
+bb_priceQuantity.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
 	event.preventDefault();
 	bb_quantityCounter++;
-	bb_priceQuantity.value = bb_quantityCounter;
+	bb_priceQuantityInput.value = bb_quantityCounter;
 	BB_sumTotal();
 });
 
-document.querySelector('#form-shopping-quantity > span > button:nth-child(1)').addEventListener('click', (event) => {
+bb_priceQuantity.querySelector('button:nth-child(1)').addEventListener('click', (event) => {
 	event.preventDefault();
-	if (bb_priceQuantity.value > 0) bb_quantityCounter--;
-	bb_priceQuantity.value = bb_quantityCounter;
+	if (bb_priceQuantityInput.value > 0) bb_quantityCounter--;
+	bb_priceQuantityInput.value = bb_quantityCounter;
 	BB_sumTotal();
 });
 
-bb_priceQuantity.addEventListener('input', (event) => {
+bb_priceQuantityInput.addEventListener('input', (event) => {
 	event.preventDefault();
-	bb_quantityCounter = bb_priceQuantity.value;
+	bb_quantityCounter = bb_priceQuantityInput.value;
 	BB_sumTotal();
 });
 
@@ -92,7 +93,7 @@ bb_requiredNodes.forEach((item, index) => {
 		if(bb_status){
 			const bb_breaker = '\n\n'+'-'.repeat(50)+'\n\n';
 			document.querySelector('textarea.contact-form-email-message').textContent =
-				`${bb_productName.textContent}\nSố lượng: ${bb_priceQuantity.value} hộp\n` +
+				`${bb_productName.textContent}\nSố lượng: ${bb_priceQuantityInput.value} hộp\n` +
 				`Phải thu: ${bb_pricelastCost.textContent}\nPhí v.chuyển: ${bb_priceShipCost.textContent}${bb_breaker}` +
 				`Tên khách: ${bb_contactName[0].value}\nĐiện thoại: ${bb_contactPhone[0].value}\nĐịa chỉ: ${bb_contactAddress[1].value}${bb_breaker}` +
 				`${bb_contactMessage[2].value}`;
@@ -117,7 +118,7 @@ window.onclick = function(event) {if(event.target == bb_modal) bb_modal.style.di
 
 
 function BB_sumTotal(){
-	let _calculated = parseInt(bb_priceQuantity.value, 10) * bb_information.product.price;
+	let _calculated = parseInt(bb_priceQuantityInput.value, 10) * bb_information.product.price;
 	let _discount = 0, _shipCost = 0;
 	if(bb_information.discount.active){
 		if(_calculated >= bb_information.discount.minimumOrder){
@@ -139,13 +140,5 @@ function BB_numberWithCommas(_number, _round){
 	if(Number.isInteger(_round) && _round > 0) _number = Math.round(_number/_round)*_round;
 	return _number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + '<sup>đ</sup>';
 }
-
-
-
-
-if(bb_information.product.options){
-	const bb_infoOptions = Object.keys(bb_information.options);
-}
-
 
 
