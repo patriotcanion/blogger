@@ -24,9 +24,9 @@ const bb_pricelastCost = document.querySelector('#form-shopping-lastCost > span'
 
 bb_productName.textContent = bb_information.product.name;
 let bb_tempNode = document.createElement('small');
-bb_tempNode.innerHTML = `Đơn trên ${BB_numberWithCommas(bb_information.shipping.minimumOrder-1000, 0)} miễn phí vận chuyển, giảm thêm ${bb_information.shipping.percent}% cho đơn trên ${BB_numberWithCommas(bb_information.discount.minimumOrder-1000, 0)}`;
+bb_tempNode.innerHTML = `Đơn trên ${BB_numberWithCommas(bb_information.shipping.minimumOrder-1000, 0)}<sup>đ</sup> miễn phí vận chuyển, giảm thêm ${bb_information.shipping.percent}% cho đơn trên ${BB_numberWithCommas(bb_information.discount.minimumOrder-1000, 0)}`;
 bb_productName.after(bb_tempNode);
-bb_productPrice.innerHTML = BB_numberWithCommas(bb_information.product.price, 0);
+bb_productPrice.innerHTML = BB_numberWithCommas(bb_information.product.price, 0) + '<sup>đ</sup>';
 
 BB_orderQuantitySelector(1);
 BB_sumTotal(bb_seekedQuantity.value);
@@ -112,10 +112,10 @@ function BB_sumTotal(_seekedQuantity){
 	if(bb_information.shipping.active){
 		if(_lastCost < bb_information.shipping.minimumOrder) _shipCost = bb_information.shipping.baseShipCost;
 	}
-	bb_priceActualCost.innerHTML = BB_numberWithCommas(_calculated, 1000);
-	bb_priceDiscount.innerHTML = BB_numberWithCommas(_discount, 1000);
-	bb_priceShipCost.innerHTML = BB_numberWithCommas(_shipCost, 1000);
-	bb_pricelastCost.innerHTML = BB_numberWithCommas(_lastCost + _shipCost, 1000);
+	bb_priceActualCost.innerHTML = `${BB_numberWithCommas(_calculated, 1000)}<sup>đ</sup>`;
+	bb_priceDiscount.innerHTML = `${BB_numberWithCommas(_discount, 1000)}<sup>đ</sup>`;
+	bb_priceShipCost.innerHTML = `${BB_numberWithCommas(_shipCost, 1000)}<sup>đ</sup>`;
+	bb_pricelastCost.innerHTML = `${BB_numberWithCommas(_lastCost + _shipCost, 1000)}<sup>đ</sup>`;
 }
 
 
@@ -146,7 +146,7 @@ function BB_orderQuantitySelector(_firstQuantity){
 
 function BB_numberWithCommas(_number, _round){
 	if(Number.isInteger(_round) && _round > 0) _number = Math.round(_number/_round)*_round;
-	return _number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + '<sup>đ</sup>';
+	return _number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 
 
@@ -156,14 +156,14 @@ if(bb_information.product.options){
 	const bb_productComboRegular = document.querySelector('.regular');
 	const bb_productComboPopular = document.querySelector('.popular-plan');
 	const bb_productComboSpecial = document.querySelector('.best-value-plan');
-	const bb_infoOptions = Object.keys(bb_information.options);
+	const bb_infoOptions = Object.values(bb_information.options);
 
 	[bb_productComboRegular, bb_productComboPopular, bb_productComboSpecial].forEach((element, index) => {
 		const bb_eachComboPrice = bb_information.product.price * (100 - bb_infoOptions[index].percent);
-		element.querySelector('.price').textContent = BB_numberWithCommas(bb_eachComboPrice, 1000);
+		element.querySelector('.price').innerHTML = `${BB_numberWithCommas(bb_eachComboPrice, 1000)}<sup>đ</sup>`;
 		element.querySelector('.total').textContent = `(Tổng ${BB_numberWithCommas(
 			bb_eachComboPrice * bb_infoOptions[index].quantity, 1000
-		)})`;
+		)})<sup>đ</sup>`;
 		element.querySelector('.save').textContent = `Giảm ${BB_numberWithCommas(bb_infoOptions[index].percent, 1)}%`;
 	})
 }
