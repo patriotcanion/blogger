@@ -125,21 +125,21 @@ if(bb_information.product.options){
 			bb_eachComboPrice * bb_infoOptions[index].quantity, 1000
 		)})`;
 		element.querySelector('.save').innerHTML = `Giảm ${BB_numberWithCommas(bb_infoOptions[index].percent, 1)}%`;
-		element.dataset.bborderstart = bb_infoOptions[index].quantity;
+		element.dataset.bbOrderstart = bb_infoOptions[index].quantity;
 	})
 }
 
 
 const bb_modal = document.querySelector('#bb-contact-form');
-document.querySelectorAll('[data-bbOrderStart]').forEach(function(elem){
+document.querySelectorAll('[data-bbOrderstart]').forEach(function(elem){
 	elem.href = 'javascript:void(0)';
 	elem.addEventListener('click', (event) => {
 		event.preventDefault();
-		BB_itemQuantitySelector(elem.dataset.bborderstart);
+		BB_itemQuantitySelector(elem.dataset.bbOrderstart);
 		bb_modal.style.cssText = 'display: flex; position: fixed';
 	});
 });
-document.querySelector('[data-bbOrderClose]').onclick = function(){bb_modal.style.display = 'none'}
+document.querySelector('[data-bbOrderclose]').onclick = function(){bb_modal.style.display = 'none'}
 window.onclick = function(event) {if(event.target == bb_modal) bb_modal.style.display = 'none'}
 
 
@@ -167,6 +167,7 @@ function BB_sumTotal(_seekedQuantity){
 
 function BB_itemQuantitySelector(_firstQuantity){
 	let bb_quantityCounter = parseInt(_firstQuantity, 10);
+	bb_quantityCounter = (bb_quantityCounter > bb_seekedQuantity.value) ? bb_quantityCounter : bb_seekedQuantity.value;
 
 	bb_quantitySelection.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
