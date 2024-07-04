@@ -120,7 +120,7 @@ function BB_sumTotal(_seekedQuantity){
 
 
 function BB_itemQuantitySelector(_firstQuantity){
-	let bb_quantityCounter = bb_seekedQuantity.value;
+	let bb_quantityCounter = (bb_quantityCounter < _firstQuantity) ? _firstQuantity : bb_seekedQuantity.value;
 
 	bb_quantitySelection.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
@@ -160,14 +160,13 @@ if(bb_information.product.options){
 	const bb_infoOptions = Object.values(bb_information.options);
 
 	[bb_productComboRegular, bb_productComboPopular, bb_productComboSpecial].forEach((element, index) => {
+		BB_itemQuantitySelector(bb_infoOptions[index].quantity);
 		const bb_eachComboPrice = bb_information.product.price * (100 - bb_infoOptions[index].percent) / 100;
 		element.querySelector('.price').innerHTML = `${BB_numberWithCommas(bb_eachComboPrice, 1000)}`;
 		element.querySelector('.total').innerHTML = `(Tổng ${BB_numberWithCommas(
 			bb_eachComboPrice * bb_infoOptions[index].quantity, 1000
 		)})`;
 		element.querySelector('.save').innerHTML = `Giảm ${BB_numberWithCommas(bb_infoOptions[index].percent, 1)}%`;
-
-		BB_itemQuantitySelector(bb_infoOptions[index].quantity);
 	})
 }
 
