@@ -28,8 +28,30 @@ bb_tempNode.innerHTML = `Đơn trên ${BB_numberWithCommas(bb_information.shippi
 bb_productName.after(bb_tempNode);
 bb_productPrice.innerHTML = BB_numberWithCommas(bb_information.product.price, 0) + '<sup>đ</sup>';
 
-BB_itemQuantitySelector(1);
 BB_sumTotal(bb_seekedQuantity.value);
+
+
+// let bb_quantityCounter = parseInt(bb_seekedQuantity.value, 10);
+
+// bb_quantitySelection.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
+// 	event.preventDefault();
+// 	bb_quantityCounter++;
+// 	bb_seekedQuantity.value = bb_quantityCounter;
+// 	BB_sumTotal(bb_quantityCounter);
+// });
+
+// bb_quantitySelection.querySelector('button:nth-child(1)').addEventListener('click', (event) => {
+// 	event.preventDefault();
+// 	if (bb_seekedQuantity.value > 0) bb_quantityCounter--;
+// 	bb_seekedQuantity.value = bb_quantityCounter;
+// 	BB_sumTotal(bb_quantityCounter);
+// });
+
+// bb_seekedQuantity.addEventListener('input', (event) => {
+// 	event.preventDefault();
+// 	bb_quantityCounter = bb_seekedQuantity.value;
+// 	BB_sumTotal(bb_quantityCounter);
+// });
 
 
 const bb_contactName = document.querySelector('#bb-form-contact-name > input');
@@ -88,10 +110,36 @@ bb_requiredNodes.forEach((item, index) => {
 });
 
 
+
+if(bb_information.product.options){
+	const bb_combosArea = document.querySelector('#pricing');
+	const bb_productComboRegular = bb_combosArea.querySelector('.regular');
+	const bb_productComboPopular = bb_combosArea.querySelector('.popular-plan');
+	const bb_productComboSpecial = bb_combosArea.querySelector('.best-value-plan');
+	const bb_infoOptions = Object.values(bb_information.options);
+
+	[bb_productComboRegular, bb_productComboPopular, bb_productComboSpecial].forEach((element, index) => {
+		const bb_eachComboPrice = bb_information.product.price * (100 - bb_infoOptions[index].percent) / 100;
+		element.querySelector('.price').innerHTML = `${BB_numberWithCommas(bb_eachComboPrice, 1000)}`;
+		element.querySelector('.total').innerHTML = `(Tổng ${BB_numberWithCommas(
+			bb_eachComboPrice * bb_infoOptions[index].quantity, 1000
+		)})`;
+		element.querySelector('.save').innerHTML = `Giảm ${BB_numberWithCommas(bb_infoOptions[index].percent, 1)}%`;
+		element.dataset.bbOrderStart = bb_infoOptions[index].quantity;
+	})
+}
+
+
 const bb_modal = document.querySelector('#bb-contact-form');
 document.querySelectorAll('[data-bbOrderStart]').forEach(function(elem){
 	elem.href = 'javascript:void(0)';
-	elem.onclick = function (){bb_modal.style.cssText = 'display: flex; position: fixed'}
+
+	elem.addEventListener('click', (event) => {
+		event.preventDefault();
+		BB_itemQuantitySelector(elem.dataset.bbOrderStart);
+		bb_modal.style.cssText = 'display: flex; position: fixed';
+	});
+	// elem.onclick = function (){}
 });
 document.querySelector('[data-bbOrderClose]').onclick = function(){bb_modal.style.display = 'none'}
 window.onclick = function(event) {if(event.target == bb_modal) bb_modal.style.display = 'none'}
@@ -119,29 +167,25 @@ function BB_sumTotal(_seekedQuantity){
 }
 
 
-function BB_itemQuantitySelector(_firstQuantity){
-	bb_seekedQuantity.value = _firstQuantity;
-	let bb_quantityCounter = parseInt(bb_seekedQuantity.value, 10);
-	// bb_quantityCounter = (bb_quantityCounter <= _firstQuantity) ? _firstQuantity : bb_quantityCounter;
-
+function BB_itemQuantitySelector(_neededQuantity){
 	bb_quantitySelection.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
-		bb_quantityCounter++;
-		bb_seekedQuantity.value = bb_quantityCounter;
-		BB_sumTotal(bb_quantityCounter);
+		_neededQuantity++;
+		bb_seekedQuantity.value = _neededQuantity;
+		BB_sumTotal(_neededQuantity);
 	});
 
 	bb_quantitySelection.querySelector('button:nth-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
-		if (bb_seekedQuantity.value > 0) bb_quantityCounter--;
-		bb_seekedQuantity.value = bb_quantityCounter;
-		BB_sumTotal(bb_quantityCounter);
+		if (bb_seekedQuantity.value > 0) _neededQuantity--;
+		bb_seekedQuantity.value = _neededQuantity;
+		BB_sumTotal(_neededQuantity);
 	});
 
 	bb_seekedQuantity.addEventListener('input', (event) => {
 		event.preventDefault();
-		bb_quantityCounter = bb_seekedQuantity.value;
-		BB_sumTotal(bb_quantityCounter);
+		_neededQuantity = bb_seekedQuantity.value;
+		BB_sumTotal(_neededQuantity);
 	});
 }
 
@@ -152,25 +196,6 @@ function BB_numberWithCommas(_number, _round){
 }
 
 
-
-
-if(bb_information.product.options){
-	const bb_combosArea = document.querySelector('#pricing');
-	const bb_productComboRegular = bb_combosArea.querySelector('.regular');
-	const bb_productComboPopular = bb_combosArea.querySelector('.popular-plan');
-	const bb_productComboSpecial = bb_combosArea.querySelector('.best-value-plan');
-	const bb_infoOptions = Object.values(bb_information.options);
-
-	[bb_productComboRegular, bb_productComboPopular, bb_productComboSpecial].forEach((element, index) => {
-		BB_itemQuantitySelector(bb_infoOptions[index].quantity);
-		const bb_eachComboPrice = bb_information.product.price * (100 - bb_infoOptions[index].percent) / 100;
-		element.querySelector('.price').innerHTML = `${BB_numberWithCommas(bb_eachComboPrice, 1000)}`;
-		element.querySelector('.total').innerHTML = `(Tổng ${BB_numberWithCommas(
-			bb_eachComboPrice * bb_infoOptions[index].quantity, 1000
-		)})`;
-		element.querySelector('.save').innerHTML = `Giảm ${BB_numberWithCommas(bb_infoOptions[index].percent, 1)}%`;
-	})
-}
 
 
 
