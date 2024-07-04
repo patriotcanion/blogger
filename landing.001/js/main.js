@@ -28,7 +28,7 @@ bb_tempNode.innerHTML = `Đơn trên ${BB_numberWithCommas(bb_information.shippi
 bb_productName.after(bb_tempNode);
 bb_productPrice.innerHTML = BB_numberWithCommas(bb_information.product.price, 0) + '<sup>đ</sup>';
 
-BB_orderQuantitySelector(1);
+BB_itemQuantitySelector(1);
 BB_sumTotal(bb_seekedQuantity.value);
 
 
@@ -119,7 +119,7 @@ function BB_sumTotal(_seekedQuantity){
 }
 
 
-function BB_orderQuantitySelector(_firstQuantity){
+function BB_itemQuantitySelector(_firstQuantity){
 	let bb_quantityCounter = bb_seekedQuantity.value;
 
 	bb_quantitySelection.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
@@ -153,9 +153,10 @@ function BB_numberWithCommas(_number, _round){
 
 
 if(bb_information.product.options){
-	const bb_productComboRegular = document.querySelector('.regular');
-	const bb_productComboPopular = document.querySelector('.popular-plan');
-	const bb_productComboSpecial = document.querySelector('.best-value-plan');
+	const bb_combosArea = document.querySelector('#pricing');
+	const bb_productComboRegular = bb_combosArea.querySelector('.regular');
+	const bb_productComboPopular = bb_combosArea.querySelector('.popular-plan');
+	const bb_productComboSpecial = bb_combosArea.querySelector('.best-value-plan');
 	const bb_infoOptions = Object.values(bb_information.options);
 
 	[bb_productComboRegular, bb_productComboPopular, bb_productComboSpecial].forEach((element, index) => {
@@ -165,6 +166,8 @@ if(bb_information.product.options){
 			bb_eachComboPrice * bb_infoOptions[index].quantity, 1000
 		)})`;
 		element.querySelector('.save').innerHTML = `Giảm ${BB_numberWithCommas(bb_infoOptions[index].percent, 1)}%`;
+
+		BB_itemQuantitySelector(bb_infoOptions[index].quantity);
 	})
 }
 
