@@ -128,7 +128,6 @@ function BB_priceEstimator(_seekedQuantity){
 		if(_percent.length) {
 			_percent = _percent.reduce((prev, curr) => {return prev > curr ? prev : curr;});
 			_promoCost.push(_calculated * _percent / 100);
-console.log('222', _promoCost, _lastTotalCost, _percent, _calculated, (_calculated * _percent / 100));
 		}
 	};
 
@@ -168,11 +167,13 @@ function BB_itemQuantitySelector(_firstQuantity){
 		event.preventDefault();
 		if (bb_billQuantity.value > 0) bb_quantityCounter--;
 		bb_billQuantity.value = bb_quantityCounter;
+console.log(bb_quantityCounter);
 		BB_priceEstimator(bb_quantityCounter);
 	});
 
 	bb_billQuantity.addEventListener('input', (event) => {
 		event.preventDefault();
+		bb_billQuantity.value = bb_billQuantity.value.replace(/\D+/g, '');
 		bb_quantityCounter = bb_billQuantity.value;
 		BB_priceEstimator(bb_quantityCounter);
 	});
