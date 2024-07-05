@@ -155,7 +155,7 @@ function BB_itemQuantitySelector(_firstQuantity){
 	if(!bb_quantityCounter) return;
 	bb_billQuantity.value = bb_quantityCounter;
 	BB_priceEstimator(bb_quantityCounter);
-console.log(111111, bb_quantityCounter);
+
 	bb_productQuantityArea.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
 		bb_quantityCounter++;
@@ -165,10 +165,12 @@ console.log(111111, bb_quantityCounter);
 
 	bb_productQuantityArea.querySelector('button:nth-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
-		if (bb_billQuantity.value > 0) bb_quantityCounter--;
-		bb_billQuantity.value = bb_quantityCounter;
-console.log(222222, bb_quantityCounter);
-		BB_priceEstimator(bb_quantityCounter);
+		if(bb_billQuantity.value > 0) bb_quantityCounter--;
+		if(bb_quantityCounter >= 0){
+			bb_billQuantity.value = bb_quantityCounter;
+	console.log(222222, bb_quantityCounter);
+			BB_priceEstimator(bb_quantityCounter);
+		}
 	});
 
 	bb_billQuantity.addEventListener('input', (event) => {
