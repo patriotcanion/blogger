@@ -165,8 +165,8 @@ function BB_itemQuantitySelector(_firstQuantity){
 
 	bb_productQuantityArea.querySelector('button:nth-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
-		if(bb_billQuantity.value > 0) bb_quantityCounter--;
-		if(bb_quantityCounter >= 0){
+		if(bb_billQuantity.value > 0 && bb_quantityCounter > 0){
+			bb_quantityCounter--;
 			bb_billQuantity.value = bb_quantityCounter;
 	console.log(222222, bb_quantityCounter);
 			BB_priceEstimator(bb_quantityCounter);
