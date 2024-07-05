@@ -120,14 +120,13 @@ function BB_priceEstimator(_seekedQuantity){
 			_promoCost.push(_calculated * bb_productData.promotion.percent / 100);
 	}
 
-console.log('111', _seekedQuantity, _promoCost, _lastTotalCost);
 	if(bb_productData.options.active){
 		let _percent = Object.values(bb_productData.options).map((value) => {
 			if(_seekedQuantity >= value.quantity) return value.percent;
 		});
 		_percent = _percent.filter(Boolean);
 		if(_percent.length) {
-			_percent.reduce((prev, curr) => {return prev > curr ? prev : curr;});
+			_percent = _percent.reduce((prev, curr) => {return prev > curr ? prev : curr;});
 			_promoCost.push(_calculated * _percent / 100);
 console.log('222', _promoCost, _lastTotalCost, _percent, _calculated, (_calculated * _percent / 100));
 		}
@@ -143,7 +142,7 @@ console.log('222', _promoCost, _lastTotalCost, _percent, _calculated, (_calculat
 	if(bb_productData.shipping.active){
 		if(_lastTotalCost < bb_productData.shipping.minOrderCost) _shipCost = bb_productData.shipping.baseShipCost;
 	}
-console.log('333', _seekedQuantity, _promoCost, _lastTotalCost);
+
 	bb_productPrice.innerHTML = `${BB_numberWithCommas(_lastTotalCost / _seekedQuantity, 1000)}<sup>đ</sup> <small><s>${BB_numberWithCommas(bb_productData.product.price, 1000)}<sup>đ</sup></s></small>`;
 	bb_billTotalCost.innerHTML = `${BB_numberWithCommas(_calculated, 1000)}<sup>đ</sup>`;
 	bb_billPromoCost.innerHTML = `${BB_numberWithCommas(_promoCost, 1000)}<sup>đ</sup>`;
