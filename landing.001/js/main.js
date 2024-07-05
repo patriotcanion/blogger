@@ -28,7 +28,30 @@ bb_tempNode.innerHTML = `Đơn trên ${BB_numberWithCommas(bb_information.shippi
 bb_productName.after(bb_tempNode);
 bb_productPrice.innerHTML = BB_numberWithCommas(bb_information.product.price, 0) + '<sup>đ</sup>';
 
-BB_priceEstimator(bb_seekedQuantity.value);
+BB_sumTotal(bb_seekedQuantity.value);
+
+
+// let bb_quantityCounter = parseInt(bb_seekedQuantity.value, 10);
+
+// bb_quantitySelection.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
+// 	event.preventDefault();
+// 	bb_quantityCounter++;
+// 	bb_seekedQuantity.value = bb_quantityCounter;
+// 	BB_sumTotal(bb_quantityCounter);
+// });
+
+// bb_quantitySelection.querySelector('button:nth-child(1)').addEventListener('click', (event) => {
+// 	event.preventDefault();
+// 	if (bb_seekedQuantity.value > 0) bb_quantityCounter--;
+// 	bb_seekedQuantity.value = bb_quantityCounter;
+// 	BB_sumTotal(bb_quantityCounter);
+// });
+
+// bb_seekedQuantity.addEventListener('input', (event) => {
+// 	event.preventDefault();
+// 	bb_quantityCounter = bb_seekedQuantity.value;
+// 	BB_sumTotal(bb_quantityCounter);
+// });
 
 
 const bb_contactName = document.querySelector('#bb-form-contact-name > input');
@@ -123,7 +146,7 @@ window.onclick = function(event) {if(event.target == bb_modal) bb_modal.style.di
 
 
 
-function BB_priceEstimator(_seekedQuantity){
+function BB_sumTotal(_seekedQuantity){
 	let _calculated = parseInt(_seekedQuantity, 10) * bb_information.product.price;
 	let _discount = 0, _shipCost = 0;
 	if(bb_information.discount.active){
@@ -144,28 +167,28 @@ function BB_priceEstimator(_seekedQuantity){
 
 function BB_itemQuantitySelector(_firstQuantity){
 	let bb_quantityCounter = parseInt(_firstQuantity, 10);
-	if(!bb_quantityCounter) return;
-	bb_seekedQuantity.value = bb_quantityCounter;
-	BB_priceEstimator(bb_quantityCounter);
+	console.log('seeked', bb_quantityCounter);
+	if(bb_quantityCounter) bb_seekedQuantity.value = bb_quantityCounter;
+	console.log('imported', bb_seekedQuantity.value);
 
 	bb_quantitySelection.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
 		bb_quantityCounter++;
 		bb_seekedQuantity.value = bb_quantityCounter;
-		BB_priceEstimator(bb_quantityCounter);
+		BB_sumTotal(bb_quantityCounter);
 	});
 
 	bb_quantitySelection.querySelector('button:nth-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
 		if (bb_seekedQuantity.value > 0) bb_quantityCounter--;
 		bb_seekedQuantity.value = bb_quantityCounter;
-		BB_priceEstimator(bb_quantityCounter);
+		BB_sumTotal(bb_quantityCounter);
 	});
 
 	bb_seekedQuantity.addEventListener('input', (event) => {
 		event.preventDefault();
 		bb_quantityCounter = bb_seekedQuantity.value;
-		BB_priceEstimator(bb_quantityCounter);
+		BB_sumTotal(bb_quantityCounter);
 	});
 }
 
