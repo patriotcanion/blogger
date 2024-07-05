@@ -125,11 +125,11 @@ console.log('111', _seekedQuantity, _promoCost, _lastTotalCost);
 		let _percent = Object.values(bb_productData.options).map((value) => {
 			if(_seekedQuantity >= value.quantity) return value.percent;
 		});
-		_percent = _percent.filter(value => value);
+		_percent = _percent.filter(Boolean);
 		if(_percent.length) {
 			_percent.reduce((prev, curr) => {return prev > curr ? prev : curr;});
 			_promoCost.push(_calculated * _percent / 100);
-console.log('222', _seekedQuantity, _promoCost, _lastTotalCost);
+console.log('222', _seekedQuantity, _promoCost, _lastTotalCost, _percent, _percent.reduce((prev, curr) => {return prev > curr ? prev : curr;}), _calculated);
 		}
 	};
 
