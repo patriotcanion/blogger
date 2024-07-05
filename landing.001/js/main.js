@@ -1,10 +1,7 @@
 /*=============================================
     =            Stone Script            =
 =============================================*/
-
-
-
-const bb_productData = {
+const bb_information = {
 	product: {name: 'Bổ não QA Gingko Biloba', price: 250000},
 	options: {
 		active: true,
@@ -19,20 +16,20 @@ const bb_productData = {
 
 const bb_productName = document.querySelector('#form-shopping-product > span');
 const bb_productPrice = document.querySelector('#form-shopping-price > span');
-const bb_productQuantityArea = document.querySelector('#form-shopping-quantity > span');
-const bb_billQuantity = bb_productQuantityArea.querySelector('input');
-const bb_billActualCost = document.querySelector('#form-shopping-actualCost > span');
-const bb_billPromoCost = document.querySelector('#form-shopping-discount > span');
-const bb_billShipCost = document.querySelector('#form-shopping-shipCost > span');
-const bb_billLastCost = document.querySelector('#form-shopping-lastCost > span');
+const bb_quantitySelection = document.querySelector('#form-shopping-quantity > span');
+const bb_seekedQuantity = bb_quantitySelection.querySelector('input');
+const bb_priceActualCost = document.querySelector('#form-shopping-actualCost > span');
+const bb_priceDiscount = document.querySelector('#form-shopping-discount > span');
+const bb_priceShipCost = document.querySelector('#form-shopping-shipCost > span');
+const bb_pricelastCost = document.querySelector('#form-shopping-lastCost > span');
 
-bb_productName.textContent = bb_productData.product.name;
+bb_productName.textContent = bb_information.product.name;
 let bb_tempNode = document.createElement('small');
-bb_tempNode.innerHTML = `Đơn trên ${BB_numberWithCommas(bb_productData.shipping.minOrderCost-1000, 0)}<sup>đ</sup> miễn phí vận chuyển, giảm thêm ${bb_productData.shipping.percent}% cho đơn trên ${BB_numberWithCommas(bb_productData.promotion.minOrderCost-1000, 0)}`;
+bb_tempNode.innerHTML = `Đơn trên ${BB_numberWithCommas(bb_information.shipping.minOrderCost-1000, 0)}<sup>đ</sup> miễn phí vận chuyển, giảm thêm ${bb_information.shipping.percent}% cho đơn trên ${BB_numberWithCommas(bb_information.promotion.minOrderCost-1000, 0)}`;
 bb_productName.after(bb_tempNode);
-bb_productPrice.innerHTML = BB_numberWithCommas(bb_productData.product.price, 0) + '<sup>đ</sup>';
+bb_productPrice.innerHTML = BB_numberWithCommas(bb_information.product.price, 0) + '<sup>đ</sup>';
 
-BB_priceEstimator(bb_billQuantity.value);
+BB_priceEstimator(bb_seekedQuantity.value);
 
 
 const bb_contactName = document.querySelector('#bb-form-contact-name > input');
@@ -77,8 +74,8 @@ bb_requiredNodes.forEach((item, index) => {
 		if(bb_status){
 			const bb_breaker = '\n\n'+'-'.repeat(50)+'\n\n';
 			document.querySelector('textarea.contact-form-email-message').textContent =
-				`${bb_productName.textContent}\nSố lượng: ${bb_billQuantity.value} hộp\n` +
-				`Phải thu: ${bb_billLastCost.textContent}\nPhí v.chuyển: ${bb_billShipCost.textContent}${bb_breaker}` +
+				`${bb_productName.textContent}\nSố lượng: ${bb_seekedQuantity.value} hộp\n` +
+				`Phải thu: ${bb_pricelastCost.textContent}\nPhí v.chuyển: ${bb_priceShipCost.textContent}${bb_breaker}` +
 				`Tên khách: ${bb_contactName[0].value}\nĐiện thoại: ${bb_contactPhone[0].value}\nĐịa chỉ: ${bb_contactAddress[1].value}${bb_breaker}` +
 				`${bb_contactMessage[2].value}`;
 			document.querySelector('input.contact-form-email').value = 'mail@mail.mail';
@@ -89,6 +86,27 @@ bb_requiredNodes.forEach((item, index) => {
 		// console.log(document.querySelector('textarea.contact-form-email-message').textContent);
 	});
 });
+
+
+function BB_landingPageDisplayer(){
+	const bb_combosArea = document.querySelector('#pricing');
+	if(bb_combosArea && bb_information.options.active){
+		const bb_productComboRegular = bb_combosArea.querySelector('.regular');
+		const bb_productComboPopular = bb_combosArea.querySelector('.popular-plan');
+		const bb_productComboSpecial = bb_combosArea.querySelector('.best-value-plan');
+		const bb_infoOptions = Object.values(bb_information.options);
+	
+		[bb_productComboRegular, bb_productComboPopular, bb_productComboSpecial].forEach((element, index) => {
+			const bb_eachComboPrice = bb_information.product.price * (100 - bb_infoOptions[index + 1].percent) / 100;
+			element.querySelector('.price').innerHTML = `${BB_numberWithCommas(bb_eachComboPrice, 1000)}`;
+			element.querySelector('.total').innerHTML = `(Tổng ${BB_numberWithCommas(
+				bb_eachComboPrice * bb_infoOptions[index + 1].quantity, 1000
+			)})`;
+			element.querySelector('.save').innerHTML = `Giảm ${BB_numberWithCommas(bb_infoOptions[index + 1].percent, 1)}%`;
+			element.dataset.bbOrderstart = bb_infoOptions[index + 1].quantity;
+		})
+	}
+}
 
 
 const bb_modal = document.querySelector('#bb-contact-form');
@@ -108,91 +126,75 @@ window.onclick = function(event) {if(event.target == bb_modal) bb_modal.style.di
 
 
 function BB_priceEstimator(_seekedQuantity){
-	let _calculated = parseInt(_seekedQuantity, 10) * bb_productData.product.price;
+	let _calculated = parseInt(_seekedQuantity, 10) * bb_information.product.price;
 	let _promoCost = [], _lastCost = 0, _shipCost = 0;
-	if(bb_productData.promotion.active){
-		if((_seekedQuantity >= bb_productData.promotion.minQuantity) ||
-		(_calculated >= bb_productData.promotion.minOrderCost))
-			_promoCost.push(_calculated * bb_productData.promotion.percent / 100);
+
+	if(bb_information.promotion.active){
+		if((_seekedQuantity >= bb_information.promotion.minQuantity) ||
+		(_calculated >= bb_information.promotion.minOrderCost))
+			_promoCost.push(_calculated * bb_information.promotion.percent / 100);
 	}
-	if(bb_productData.options.active){
-		const _option = Object.values(bb_productData.options).reduce((prev, curr) => {
+
+	if(bb_information.options.active){
+		const _option = Object.values(bb_information.options).reduce((prev, curr) => {
 			return prev.quantity < curr.quantity ? prev : curr;
 		});
 		if(_seekedQuantity >= _option.quantity) _promoCost.push(_calculated * _option.percent / 100);
 	};
+
 	_promoCost = _promoCost.reduce((prev, curr) => {
 		return prev.quantity < curr.quantity ? prev : curr;
 	});
 
 	_lastCost = _calculated - _promoCost;
 
-	if(bb_productData.shipping.active){
-		if(_lastCost < bb_productData.shipping.minOrderCost) _shipCost = bb_productData.shipping.baseShipCost;
+	if(bb_information.shipping.active){
+		if(_lastCost < bb_information.shipping.minOrderCost) _shipCost = bb_information.shipping.baseShipCost;
 	}
 
-	bb_billActualCost.innerHTML = `${BB_numberWithCommas(_calculated, 1000)}<sup>đ</sup>`;
-	bb_billPromoCost.innerHTML = `${BB_numberWithCommas(_promoCost, 1000)}<sup>đ</sup>`;
-	bb_billShipCost.innerHTML = `${BB_numberWithCommas(_shipCost, 1000)}<sup>đ</sup>`;
-	bb_billLastCost.innerHTML = `${BB_numberWithCommas(_lastCost + _shipCost, 1000)}<sup>đ</sup>`;
+	bb_priceActualCost.innerHTML = `${BB_numberWithCommas(_calculated, 1000)}<sup>đ</sup>`;
+	bb_priceDiscount.innerHTML = `${BB_numberWithCommas(_promoCost, 1000)}<sup>đ</sup>`;
+	bb_priceShipCost.innerHTML = `${BB_numberWithCommas(_shipCost, 1000)}<sup>đ</sup>`;
+	bb_pricelastCost.innerHTML = `${BB_numberWithCommas(_lastCost + _shipCost, 1000)}<sup>đ</sup>`;
 }
 
 
 function BB_itemQuantitySelector(_firstQuantity){
 	let bb_quantityCounter = parseInt(_firstQuantity, 10);
 	if(!bb_quantityCounter) return;
-	bb_billQuantity.value = bb_quantityCounter;
+	bb_seekedQuantity.value = bb_quantityCounter;
 	BB_priceEstimator(bb_quantityCounter);
 
-	bb_productQuantityArea.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
+	bb_quantitySelection.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
 		bb_quantityCounter++;
-		bb_billQuantity.value = bb_quantityCounter;
+		bb_seekedQuantity.value = bb_quantityCounter;
 		BB_priceEstimator(bb_quantityCounter);
 	});
 
-	bb_productQuantityArea.querySelector('button:nth-child(1)').addEventListener('click', (event) => {
+	bb_quantitySelection.querySelector('button:nth-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
-		if (bb_billQuantity.value > 0) bb_quantityCounter--;
-		bb_billQuantity.value = bb_quantityCounter;
+		if (bb_seekedQuantity.value > 0) bb_quantityCounter--;
+		bb_seekedQuantity.value = bb_quantityCounter;
 		BB_priceEstimator(bb_quantityCounter);
 	});
 
-	bb_billQuantity.addEventListener('input', (event) => {
+	bb_seekedQuantity.addEventListener('input', (event) => {
 		event.preventDefault();
-		bb_quantityCounter = bb_billQuantity.value;
+		bb_quantityCounter = bb_seekedQuantity.value;
 		BB_priceEstimator(bb_quantityCounter);
 	});
 }
 
 
 function BB_numberWithCommas(_number, _round){
-	if(Number.isInteger(_round) && _round > 0) _number = Math.round(_number / _round) * _round;
+	if(Number.isInteger(_round) && _round > 0) _number = Math.round(_number/_round)*_round;
 	return _number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 
 
 
 
-
-
-
-// Show all combos' pricing on landing page
-	const bb_combosArea = document.querySelector('#pricing');
-	if(bb_combosArea && bb_productData.options.active){
-		const bb_infoOptions = Object.values(bb_productData.options);
-
-		[bb_combosArea.querySelector('.regular'), bb_combosArea.querySelector('.popular-plan'),
-		bb_combosArea.querySelector('.best-value-plan')].forEach((element, index) => {
-			const bb_comboPrice = bb_productData.product.price * (100 - bb_infoOptions[index + 1].percent) / 100;
-			element.querySelector('.price').innerHTML = `${BB_numberWithCommas(bb_comboPrice, 1000)}`;
-			element.querySelector('.total').innerHTML = `(Tổng ${BB_numberWithCommas(
-				bb_comboPrice * bb_infoOptions[index + 1].quantity, 1000
-			)})`;
-			element.querySelector('.save').innerHTML = `Giảm ${BB_numberWithCommas(bb_infoOptions[index + 1].percent, 1)}%`;
-			element.dataset.bbOrderstart = bb_infoOptions[index + 1].quantity;
-		})
-	}
 
 
 
