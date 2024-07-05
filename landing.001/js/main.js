@@ -93,7 +93,7 @@
 	
 	
 	const bb_modal = document.querySelector('#bb-contact-form');
-	document.querySelectorAll('[data-bbOrderstart]').forEach(function(elem){
+	document.querySelectorAll('[data-bb-orderstart]').forEach(function(elem){
 		elem.href = 'javascript:void(0)';
 		elem.addEventListener('click', (event) => {
 			event.preventDefault();
@@ -101,7 +101,7 @@
 			bb_modal.style.cssText = 'display: flex; position: fixed';
 		});
 	});
-	document.querySelector('[data-bbOrderclose]').onclick = function(){bb_modal.style.display = 'none'}
+	document.querySelector('[data-bb-orderclose]').onclick = function(){bb_modal.style.display = 'none'}
 	window.onclick = function(event) {if(event.target == bb_modal) bb_modal.style.display = 'none'}
 	
 	
