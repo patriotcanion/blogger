@@ -125,7 +125,7 @@ console.log('111', _seekedQuantity, _promoCost, _lastTotalCost);
 		let _percent = Object.values(bb_productData.options).map((value) => {
 			if(_seekedQuantity >= value.quantity) return value.percent;
 		});
-		_percent = _percent.filter(Boolean);
+		_percent = _percent.filter(value => value);
 		if(_percent.length) {
 			_percent.reduce((prev, curr) => {return prev > curr ? prev : curr;});
 			_promoCost.push(_calculated * _percent / 100);
