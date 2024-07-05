@@ -129,7 +129,7 @@ console.log('111', _seekedQuantity, _promoCost, _lastTotalCost);
 		if(_percent.length) {
 			_percent.reduce((prev, curr) => {return prev > curr ? prev : curr;});
 			_promoCost.push(_calculated * _percent / 100);
-console.log('222', _seekedQuantity, _promoCost, _lastTotalCost, _percent, _percent.reduce((prev, curr) => {return prev > curr ? prev : curr;}), _calculated);
+console.log('222', _promoCost, _lastTotalCost, _percent, _calculated, (_calculated * _percent / 100));
 		}
 	};
 
