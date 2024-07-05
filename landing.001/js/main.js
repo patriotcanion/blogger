@@ -2,7 +2,6 @@
     =            Stone Script            =
 =============================================*/
 
-(function(){
 
 
 const bb_productData = {
@@ -195,7 +194,6 @@ function BB_numberWithCommas(_number, _round){
 		})
 	}
 
-})();
 
 
 
