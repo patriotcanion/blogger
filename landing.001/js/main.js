@@ -90,6 +90,9 @@ bb_requiredNodes.forEach((item, index) => {
 });
 
 
+BB_landingPageDisplayer();
+
+
 const bb_modal = document.querySelector('#bb-contact-form');
 document.querySelectorAll('[data-bb-orderstart]').forEach(function(elem){
 	elem.href = 'javascript:void(0)';
@@ -107,7 +110,7 @@ window.onclick = function(event) {if(event.target == bb_modal) bb_modal.style.di
 
 
 function BB_priceEstimator(_seekedQuantity){
-	console.log(_seekedQuantity);
+console.log(_seekedQuantity);
 
 	let _calculated = parseInt(_seekedQuantity, 10) * bb_productData.product.price;
 	let _promoCost = [], _lastCost = 0, _shipCost = 0;
@@ -144,7 +147,7 @@ function BB_itemQuantitySelector(_firstQuantity){
 	if(!bb_quantityCounter) return;
 	bb_billQuantity.value = bb_quantityCounter;
 	BB_priceEstimator(bb_quantityCounter);
-
+console.log(bb_quantityCounter);
 	bb_productQuantityArea.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
 		bb_quantityCounter++;
@@ -192,7 +195,7 @@ function BB_landingPageDisplayer(){
 			element.dataset.bbOrderstart = bb_infoOptions[index + 1].quantity;
 		})
 	}
-} BB_landingPageDisplayer();
+} 
 
 })();
 
