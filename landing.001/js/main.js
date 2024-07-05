@@ -2,12 +2,11 @@
     =            Stone Script            =
 =============================================*/
 const bb_information = {
-	product: {name: 'Bổ não QA Gingko Biloba', price: 250000},
+	product: {name: 'Bổ não QA Gingko Biloba', price: 250000, options: true},
 	options: {
-		active: true,
-		combo_01: {quantity: 1, percent: 20.4},
-		combo_02: {quantity: 3, percent: 30},
-		combo_03: {quantity: 6, percent: 36}
+		regular: {quantity: 1, percent: 20.4},
+		popular: {quantity: 3, percent: 30},
+		special: {quantity: 6, percent: 36}
 	},
 	discount: {active: true, minimumOrder: 500000, percent: 15},
 	shipping: {active: true, baseShipCost: 20000, minimumOrder: 300000, percent: 15}
@@ -89,7 +88,7 @@ bb_requiredNodes.forEach((item, index) => {
 
 
 
-if(bb_information.options.active){
+if(bb_information.product.options){
 	const bb_combosArea = document.querySelector('#pricing');
 	const bb_productComboRegular = bb_combosArea.querySelector('.regular');
 	const bb_productComboPopular = bb_combosArea.querySelector('.popular-plan');
@@ -97,13 +96,13 @@ if(bb_information.options.active){
 	const bb_infoOptions = Object.values(bb_information.options);
 
 	[bb_productComboRegular, bb_productComboPopular, bb_productComboSpecial].forEach((element, index) => {
-		const bb_eachComboPrice = bb_information.product.price * (100 - bb_infoOptions[index + 1].percent) / 100;
+		const bb_eachComboPrice = bb_information.product.price * (100 - bb_infoOptions[index].percent) / 100;
 		element.querySelector('.price').innerHTML = `${BB_numberWithCommas(bb_eachComboPrice, 1000)}`;
 		element.querySelector('.total').innerHTML = `(Tổng ${BB_numberWithCommas(
-			bb_eachComboPrice * bb_infoOptions[index + 1].quantity, 1000
+			bb_eachComboPrice * bb_infoOptions[index].quantity, 1000
 		)})`;
-		element.querySelector('.save').innerHTML = `Giảm ${BB_numberWithCommas(bb_infoOptions[index + 1].percent, 1)}%`;
-		element.dataset.bbOrderstart = bb_infoOptions[index + 1].quantity;
+		element.querySelector('.save').innerHTML = `Giảm ${BB_numberWithCommas(bb_infoOptions[index].percent, 1)}%`;
+		element.dataset.bbOrderstart = bb_infoOptions[index].quantity;
 	})
 }
 
