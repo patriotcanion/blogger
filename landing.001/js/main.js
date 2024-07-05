@@ -5,12 +5,12 @@ const bb_information = {
 	product: {name: 'Bổ não QA Gingko Biloba', price: 250000},
 	options: {
 		active: true,
-		opt_01: {quantity: 1, percent: 20.4},
-		opt_02: {quantity: 3, percent: 30},
-		opt_03: {quantity: 6, percent: 36}
+		combo_01: {quantity: 1, percent: 20.4},
+		combo_02: {quantity: 3, percent: 30},
+		combo_03: {quantity: 6, percent: 36}
 	},
-	promotion: {active: true, minQuantity: 2, minOrderCost: 500000, percent: 15},
-	shipping: {active: true, baseShipCost: 20000, minOrderCost: 300000, percent: 15}
+	discount: {active: true, minimumOrder: 500000, percent: 15},
+	shipping: {active: true, baseShipCost: 20000, minimumOrder: 300000, percent: 15}
 }
 
 
@@ -25,7 +25,7 @@ const bb_pricelastCost = document.querySelector('#form-shopping-lastCost > span'
 
 bb_productName.textContent = bb_information.product.name;
 let bb_tempNode = document.createElement('small');
-bb_tempNode.innerHTML = `Đơn trên ${BB_numberWithCommas(bb_information.shipping.minOrderCost-1000, 0)}<sup>đ</sup> miễn phí vận chuyển, giảm thêm ${bb_information.shipping.percent}% cho đơn trên ${BB_numberWithCommas(bb_information.promotion.minOrderCost-1000, 0)}`;
+bb_tempNode.innerHTML = `Đơn trên ${BB_numberWithCommas(bb_information.shipping.minimumOrder-1000, 0)}<sup>đ</sup> miễn phí vận chuyển, giảm thêm ${bb_information.shipping.percent}% cho đơn trên ${BB_numberWithCommas(bb_information.discount.minimumOrder-1000, 0)}`;
 bb_productName.after(bb_tempNode);
 bb_productPrice.innerHTML = BB_numberWithCommas(bb_information.product.price, 0) + '<sup>đ</sup>';
 
@@ -126,34 +126,18 @@ window.onclick = function(event) {if(event.target == bb_modal) bb_modal.style.di
 
 function BB_priceEstimator(_seekedQuantity){
 	let _calculated = parseInt(_seekedQuantity, 10) * bb_information.product.price;
-	let _promoCost = [], _lastCost = 0, _shipCost = 0;
-
-	if(bb_information.promotion.active){
-		if(
-			(_seekedQuantity >= bb_information.promotion.minQuantity) || _calculated >= bb_information.promotion.minOrderCost)
-			_promoCost.push(_calculated * bb_information.promotion.percent / 100);
+	let _discount = 0, _shipCost = 0;
+	if(bb_information.discount.active){
+		if(_calculated >= bb_information.discount.minimumOrder){
+		_discount = _calculated * bb_information.discount.percent / 100;
+		}
 	}
-
-	if(bb_information.options.active){
-		const _option = {};
-		_option = Object.values(bb_information.options).reduce((prev, curr) => {
-			return prev.quantity < curr.quantity ? prev : curr;
-		});
-		if(_seekedQuantity >= _option.quantity) _promoCost.push(_calculated * _option.percent / 100);
-	};
-
-	_promoCost = _promoCost.reduce((prev, curr) => {
-		return prev.quantity < curr.quantity ? prev : curr;
-	});
-
-	_lastCost = _calculated - _promoCost;
-
+	const _lastCost = _calculated - _discount;
 	if(bb_information.shipping.active){
-		if(_lastCost < bb_information.shipping.minOrderCost) _shipCost = bb_information.shipping.baseShipCost;
+		if(_lastCost < bb_information.shipping.minimumOrder) _shipCost = bb_information.shipping.baseShipCost;
 	}
-
 	bb_priceActualCost.innerHTML = `${BB_numberWithCommas(_calculated, 1000)}<sup>đ</sup>`;
-	bb_priceDiscount.innerHTML = `${BB_numberWithCommas(_promoCost, 1000)}<sup>đ</sup>`;
+	bb_priceDiscount.innerHTML = `${BB_numberWithCommas(_discount, 1000)}<sup>đ</sup>`;
 	bb_priceShipCost.innerHTML = `${BB_numberWithCommas(_shipCost, 1000)}<sup>đ</sup>`;
 	bb_pricelastCost.innerHTML = `${BB_numberWithCommas(_lastCost + _shipCost, 1000)}<sup>đ</sup>`;
 }
