@@ -88,24 +88,23 @@ bb_requiredNodes.forEach((item, index) => {
 });
 
 
-function BB_landingPageDisplayer(){
+
+if(bb_information.options.active){
 	const bb_combosArea = document.querySelector('#pricing');
-	if(bb_combosArea && bb_information.options.active){
-		const bb_productComboRegular = bb_combosArea.querySelector('.regular');
-		const bb_productComboPopular = bb_combosArea.querySelector('.popular-plan');
-		const bb_productComboSpecial = bb_combosArea.querySelector('.best-value-plan');
-		const bb_infoOptions = Object.values(bb_information.options);
-	
-		[bb_productComboRegular, bb_productComboPopular, bb_productComboSpecial].forEach((element, index) => {
-			const bb_eachComboPrice = bb_information.product.price * (100 - bb_infoOptions[index + 1].percent) / 100;
-			element.querySelector('.price').innerHTML = `${BB_numberWithCommas(bb_eachComboPrice, 1000)}`;
-			element.querySelector('.total').innerHTML = `(Tổng ${BB_numberWithCommas(
-				bb_eachComboPrice * bb_infoOptions[index + 1].quantity, 1000
-			)})`;
-			element.querySelector('.save').innerHTML = `Giảm ${BB_numberWithCommas(bb_infoOptions[index + 1].percent, 1)}%`;
-			element.dataset.bbOrderstart = bb_infoOptions[index + 1].quantity;
-		})
-	}
+	const bb_productComboRegular = bb_combosArea.querySelector('.regular');
+	const bb_productComboPopular = bb_combosArea.querySelector('.popular-plan');
+	const bb_productComboSpecial = bb_combosArea.querySelector('.best-value-plan');
+	const bb_infoOptions = Object.values(bb_information.options);
+
+	[bb_productComboRegular, bb_productComboPopular, bb_productComboSpecial].forEach((element, index) => {
+		const bb_eachComboPrice = bb_information.product.price * (100 - bb_infoOptions[index + 1].percent) / 100;
+		element.querySelector('.price').innerHTML = `${BB_numberWithCommas(bb_eachComboPrice, 1000)}`;
+		element.querySelector('.total').innerHTML = `(Tổng ${BB_numberWithCommas(
+			bb_eachComboPrice * bb_infoOptions[index + 1].quantity, 1000
+		)})`;
+		element.querySelector('.save').innerHTML = `Giảm ${BB_numberWithCommas(bb_infoOptions[index + 1].percent, 1)}%`;
+		element.dataset.bbOrderstart = bb_infoOptions[index + 1].quantity;
+	})
 }
 
 
@@ -130,13 +129,14 @@ function BB_priceEstimator(_seekedQuantity){
 	let _promoCost = [], _lastCost = 0, _shipCost = 0;
 
 	if(bb_information.promotion.active){
-		if((_seekedQuantity >= bb_information.promotion.minQuantity) ||
-		(_calculated >= bb_information.promotion.minOrderCost))
+		if(
+			(_seekedQuantity >= bb_information.promotion.minQuantity) || _calculated >= bb_information.promotion.minOrderCost)
 			_promoCost.push(_calculated * bb_information.promotion.percent / 100);
 	}
 
 	if(bb_information.options.active){
-		const _option = Object.values(bb_information.options).reduce((prev, curr) => {
+		const _option = {};
+		_option = Object.values(bb_information.options).reduce((prev, curr) => {
 			return prev.quantity < curr.quantity ? prev : curr;
 		});
 		if(_seekedQuantity >= _option.quantity) _promoCost.push(_calculated * _option.percent / 100);
