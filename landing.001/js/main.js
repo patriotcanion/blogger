@@ -167,9 +167,9 @@ function BB_sumTotal(_seekedQuantity){
 
 function BB_itemQuantitySelector(_firstQuantity){
 	let bb_quantityCounter = parseInt(_firstQuantity, 10);
-	console.log('seeked', bb_quantityCounter);
-	if(bb_quantityCounter) bb_seekedQuantity.value = bb_quantityCounter;
-	console.log('imported', bb_seekedQuantity.value);
+	if(!bb_quantityCounter) return;
+	bb_seekedQuantity.value = bb_quantityCounter;
+	BB_sumTotal(bb_quantityCounter);
 
 	bb_quantitySelection.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
