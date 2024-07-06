@@ -216,7 +216,7 @@ function BB_landingPageContactAdder(){
 
 	bb_tempNode = document.createElement('style');
 	bb_tempNode.textContent = `.footer-contact-wrap .phone-note::after { content: "(Số điện thoại có sử dụng Zalo)"; } \
-	.footer-contact-wrap .phone::after { content: "0${bb_sellerContactData.address}"; } \
+	.footer-contact-wrap .address::after { content: "${bb_sellerContactData.address}"; } \
 	.footer-contact-wrap .phone::after { content: "0${BB_numberDotSeparator(bb_sellerContactData.phone.substring(1), 0)}"; }\
 	.footer-contact-wrap .mail::after { content: "${bb_sellerContactData.email()}"; }`;
 	bb_sellerPhone.after(bb_tempNode);
