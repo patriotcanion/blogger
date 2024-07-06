@@ -161,7 +161,8 @@ function BB_itemQuantitySelector(_firstQuantity){
 	let bb_quantityCounter = parseInt(_firstQuantity, 10);
 	if(!bb_quantityCounter) return;
 	bb_billQuantity.value = bb_quantityCounter;
-	BB_priceEstimator(bb_quantityCounter);
+
+	// BB_priceEstimator(bb_quantityCounter);
 
 	bb_productQuantityArea.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
