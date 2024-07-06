@@ -212,10 +212,10 @@ function BB_landingPageContactAdder(){
 	// bb_sellerPhone.innerHTML = bb_sellerPhone.innerHTML + ' 0' + BB_numberDotSeparator(bb_sellerContactData.phone.substring(1), 0);
 
 	let bb_tempNode = document.createElement('style');
-	bb_tempNode.textContent = `.footer-contact-wrap .address::after { content: "${bb_sellerContactData.address}"; } \
-	.footer-contact-wrap .phone::after { content: "0${BB_numberDotSeparator(bb_sellerContactData.phone.substring(1), 0)}"; }\
-	.footer-contact-wrap .address::after { content: "${bb_sellerContactData.zalo.note}"; } \
-	.footer-contact-wrap .mail::after { content: "${bb_sellerContactData.email()}"; }`;
+	bb_tempNode.textContent = `.footer-contact-wrap .address::after {content: "${bb_sellerContactData.address}";} \
+	.footer-contact-wrap .phone::after {content: "0${BB_numberDotSeparator(bb_sellerContactData.phone.substring(1), 0)}";}\
+	.footer-contact-wrap .zalo::after {content: "${bb_sellerContactData.zalo.note}";} \
+	.footer-contact-wrap .mail::after {content: "${bb_sellerContactData.email()}";}`;
 	bb_sellerAddress.before(bb_tempNode);
 
 	bb_tempNode = document.createElement('p');
