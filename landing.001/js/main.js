@@ -179,7 +179,7 @@ function BB_itemQuantitySelector(_firstQuantity){
 			// if(bb_billQuantity.value - )
 // console.log('second: ', bb_quantityCounter);
 			BB_priceEstimator(+bb_billQuantity.value - 1);
-		}
+		// }
 	});
 
 	bb_billQuantity.addEventListener('input', (event) => {
