@@ -197,6 +197,7 @@ function BB_landingPageContactAdder(){
 	const bb_sellerContactData = {
 		address: '24/1/2A2 Chương Dương, Trần Phú, Hải Dương',
 		phone: '0857319366',
+		zalo: {note: 'nhắn tin zalo', url: 'https://zaloapp.com/qr/p/z29xq2umx020'},
 		email: function(){const separate = window.location.host.split('.'); separate.shift(); return('hello@' + separate.join('.'));}
 	}
 	const bb_contactArea = document.querySelector('.footer-contact-wrap');
@@ -211,9 +212,9 @@ function BB_landingPageContactAdder(){
 	// bb_sellerPhone.innerHTML = bb_sellerPhone.innerHTML + ' 0' + BB_numberDotSeparator(bb_sellerContactData.phone.substring(1), 0);
 
 	let bb_tempNode = document.createElement('style');
-	bb_tempNode.textContent = `.footer-contact-wrap .phone-note::after { content: "(Số điện thoại có sử dụng Zalo)"; } \
-	.footer-contact-wrap .address::after { content: "${bb_sellerContactData.address}"; } \
+	bb_tempNode.textContent = `.footer-contact-wrap .address::after { content: "${bb_sellerContactData.address}"; } \
 	.footer-contact-wrap .phone::after { content: "0${BB_numberDotSeparator(bb_sellerContactData.phone.substring(1), 0)}"; }\
+	.footer-contact-wrap .address::after { content: "${bb_sellerContactData.zalo.note}"; } \
 	.footer-contact-wrap .mail::after { content: "${bb_sellerContactData.email()}"; }`;
 	bb_sellerAddress.before(bb_tempNode);
 
