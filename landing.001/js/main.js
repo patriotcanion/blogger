@@ -103,7 +103,7 @@ document.querySelectorAll('[data-bb-orderstart]').forEach(function(elem){
 	elem.href = 'javascript:void(0)';
 	elem.addEventListener('click', (event) => {
 		event.preventDefault();
-		BB_itemQuantitySelector(elem);
+		BB_itemQuantitySelector(elem.dataset.bbOrderstart);
 		bb_modal.style.cssText = 'display: flex; position: fixed';
 	});
 });
@@ -158,7 +158,7 @@ function BB_priceEstimator(_seekedQuantity){
 
 
 function BB_itemQuantitySelector(_firstQuantity){
-	let bb_quantityCounter = parseInt(_firstQuantity.dataset.bbOrderstart, 10);
+	let bb_quantityCounter = parseInt(_firstQuantity, 10);
 	if(!bb_quantityCounter) return;
 	bb_billQuantity.value = bb_quantityCounter;
 
@@ -174,7 +174,7 @@ function BB_itemQuantitySelector(_firstQuantity){
 	bb_productQuantityArea.querySelector('button:nth-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
 		if(bb_billQuantity.value > 1 && bb_quantityCounter > 1){
-console.log('first: ', bb_quantityCounter);
+console.log('first: ', bb_quantityCounter, bb_quantityCounter--);
 			bb_quantityCounter--;
 console.log('second: ', bb_quantityCounter);
 			bb_billQuantity.value = bb_quantityCounter;
