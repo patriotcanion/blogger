@@ -148,6 +148,7 @@ function BB_priceEstimator(_seekedQuantity){
 		if(_lastTotalCost < bb_productData.shipping.minOrderCost) _shipCost = bb_productData.shipping.baseShipCost;
 	}
 
+	bb_billQuantity.value = _seekedQuantity;
 	bb_productPrice.innerHTML = `${BB_numberDotSeparator(_lastTotalCost / _seekedQuantity, 1000)}<sup>đ</sup> \
 		<s>${BB_numberDotSeparator(bb_productData.product.price, 1000)}<sup>đ</sup></s>`;
 	bb_billTotalCost.innerHTML = `${BB_numberDotSeparator(_calculated, 1000)}<sup>đ</sup>`;
@@ -167,7 +168,6 @@ function BB_itemQuantitySelector(_firstQuantity){
 	bb_productQuantityArea.querySelector('button:nth-last-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
 		bb_quantityCounter++;
-		bb_billQuantity.value = bb_quantityCounter;
 		BB_priceEstimator(bb_quantityCounter);
 	});
 
@@ -177,7 +177,6 @@ function BB_itemQuantitySelector(_firstQuantity){
 console.log('first: ', bb_quantityCounter, bb_quantityCounter-1);
 			bb_quantityCounter--;
 console.log('second: ', bb_quantityCounter);
-			// bb_billQuantity.value = bb_quantityCounter;
 			BB_priceEstimator(bb_quantityCounter);
 		}
 	});
