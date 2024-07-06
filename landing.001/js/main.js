@@ -174,7 +174,7 @@ function BB_itemQuantitySelector(_firstQuantity){
 	bb_productQuantityArea.querySelector('button:nth-child(1)').addEventListener('click', (event) => {
 		event.preventDefault();
 		if(bb_billQuantity.value > 1 && bb_quantityCounter > 1){
-console.log('first: ', bb_quantityCounter, bb_quantityCounter--);
+console.log('first: ', bb_quantityCounter, bb_quantityCounter-1);
 			bb_quantityCounter--;
 console.log('second: ', bb_quantityCounter);
 			bb_billQuantity.value = bb_quantityCounter;
