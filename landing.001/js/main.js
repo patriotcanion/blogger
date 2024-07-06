@@ -184,8 +184,7 @@ console.log('second: ', bb_quantityCounter);
 	bb_billQuantity.addEventListener('input', (event) => {
 		event.preventDefault();
 		bb_billQuantity.value = bb_billQuantity.value.replace(/\D+/g, '');
-		bb_quantityCounter = bb_billQuantity.value;
-		BB_priceEstimator(bb_quantityCounter);
+		BB_priceEstimator(bb_billQuantity.value);
 	});
 }
 
