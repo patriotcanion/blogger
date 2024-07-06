@@ -162,7 +162,7 @@ function BB_itemQuantitySelector(_firstQuantity){
 		bb_quantityCounter++;
 		const _number = parseInt(bb_billQuantity.value, 10);
 		bb_billQuantity.value = (bb_quantityCounter - _number) === 1 ? bb_quantityCounter : _number + 1;
-		bb_billQuantity.value = bb_quantityCounter;
+		// bb_billQuantity.value = bb_quantityCounter;
 		BB_priceEstimator(bb_quantityCounter);
 	});
 
