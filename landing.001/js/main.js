@@ -209,13 +209,21 @@ function BB_landingPageContactAdder(){
 	if(bb_sellerAddress.innerHTML) return;
 	bb_sellerAddress.innerHTML = bb_sellerAddress.innerHTML + ' ' + bb_sellerContactData.address;
 	// bb_sellerPhone.innerHTML = bb_sellerPhone.innerHTML + ' 0' + BB_numberDotSeparator(bb_sellerContactData.phone.substring(1), 0);
-	let bb_tempNode = document.createElement('p');
-	bb_tempNode.textContent = '(Số điện thoại có sử dụng Zalo)';
+	// let bb_tempNode = document.createElement('p');
+	// bb_tempNode.textContent = '(Số điện thoại có sử dụng Zalo)';
+	// bb_sellerPhone.after(bb_tempNode);
+
+	bb_tempNode = document.createElement('style');
+	bb_tempNode.textContent = `.footer-contact-wrap .address::after { content: "(Số điện thoại có sử dụng Zalo)"; } \
+	.footer-contact-wrap .phone::after { content: "0${BB_numberDotSeparator(bb_sellerContactData.phone.substring(1), 0)}"; }\
+	.footer-contact-wrap .mail::after { content: "${bb_sellerContactData.email()}"; }`;
 	bb_sellerPhone.after(bb_tempNode);
-	bb_tempNode = window.getComputedStyle(bb_sellerPhone,':after');
-	bb_tempNode.style.setProperty('content', ' 0' + BB_numberDotSeparator(bb_sellerContactData.phone.substring(1), 0));
-	bb_tempNode = window.getComputedStyle(bb_sellerEmail,':after');
-	bb_tempNode.style.setProperty('content', bb_sellerContactData.email());
+	bb_contactArea.innerHTML = bb_tempNode + bb_contactArea.innerHTML;
+
+	// bb_tempNode = window.getComputedStyle(bb_sellerPhone,':after');
+	// bb_tempNode.setPropertyValue('content', ' 0' + BB_numberDotSeparator(bb_sellerContactData.phone.substring(1), 0));
+	// bb_tempNode = window.getComputedStyle(bb_sellerEmail,':after');
+	// bb_tempNode.setProperty('content', bb_sellerContactData.email());
 
 	// bb_sellerEmail.innerHTML = bb_sellerEmail.innerHTML + ' ' + bb_sellerContactData.email();
 
