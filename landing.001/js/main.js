@@ -177,7 +177,7 @@ function BB_itemQuantitySelector(_firstQuantity){
 console.log('first: ', bb_quantityCounter, bb_quantityCounter-1);
 			bb_quantityCounter--;
 console.log('second: ', bb_quantityCounter);
-			bb_billQuantity.value = bb_quantityCounter;
+			// bb_billQuantity.value = bb_quantityCounter;
 			BB_priceEstimator(bb_quantityCounter);
 		}
 	});
