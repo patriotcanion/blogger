@@ -225,6 +225,7 @@ function BB_modalOderAndContactForm(){
                 }
             });
             if(bb_requiredNodes.length === bb_requiredMatcher.length){
+                console.log(bb_requiredMatcher)
                 return bb_requiredMatcher.reduce((product, value) => {return product * value});
             }else{
                 return 0
